@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:${RUNSERVER_PORT}
+    volumes:
+      - .:/app
+    ports:
+      - "${RUNSERVER_PORT}:${RUNSERVER_PORT}"
+    env_file:
+      - .env
+     
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

@@ -1,0 +1,112 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}
+Inicar Sesion
+{% endblock %}
+
+{% block page_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'vendor/css/pages/page-auth.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <!-- Login -->
+      <div class="card">
+        <div class="card-body">
+          <!-- Logo -->
+          <div class="app-brand justify-content-center">
+            <a href="{% url 'modules:index' %}" class="app-brand-link gap-2">
+              <span class="app-brand-logo demo">
+                {% include 'sneat/layout/partials/menu/vertical/logo.html' with width=25 %}
+              </span>
+              <span class="app-brand-text demo text-body fw-bold">{% get_theme_variables 'template_name' %}</span>
+            </a>
+          </div>
+          <!-- /Logo -->
+          <h4 class="mb-2">¡Bienvenidos a {% get_theme_variables 'template_name' %}! 👋</h4>
+          <p class="mb-4">Inicie sesión en su cuenta</p>
+
+          <form id="formAuthentication" class="mb-3" method="POST">
+            {% if form.error_messages %}
+            <div data-error></div>
+            {% endif %}
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label for="username" class="form-label">Cédula de Identidad</label>
+              {{ form.username }}
+            </div>
+
+            <div class="mb-3 form-password-toggle">
+              <div class="d-flex justify-content-between">
+                <label class="form-label" for="password">Contraseña</label>
+                <a href="{% url 'auth:forgot-password' %}"><small>¿Has olvidado tu contraseña?</small></a>
+              </div>
+
+              <div class="input-group input-group-merge">
+                {{ form.password }}
+                <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="remember-me" />
+                <label class="form-check-label" for="remember-me">Acuérdate de mí</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <button class="btn btn-primary d-grid w-100" type="submit">
+                Iniciar sesión
+                <i class="bx log-in"></i>
+              </button>
+            </div>
+          </form>
+
+          <p class="text-center">
+            <span>¿Nuevo en nuestra plataforma?</span>
+            <a href="{% url 'auth:register' %}"><span>Crea una cuenta</span></a>
+          </p>
+        </div>
+      </div>
+      <!-- /Login -->
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/ajax-setup.js' %}"></script>
+<script>
+  $('form').on('submit', function (event) {
+    event.preventDefault()
+  
+    $.ajax({
+      url: '{% url uri_api_login %}',
+      type: "POST",
+      data: $(this).serializeArray(),
+      dataType: 'json'
+    })
+      .done(function (data) {
+        $('form').trigger('reset')
+        setLocalStorage('jwt', data)
+        location.replace('{{ successful_redirection }}')
+      })
+      .fail(({status, responseJSON}, textStatus) => {
+        if (status==401)
+          toastError('Login', 'Credenciales incorrectas.', '')
+          $('[data-error]').html(`<div class="alert alert-danger alert-dismissible" role="alert">
+            <strong>Advertencia:</strong> <p>Por favor, introduzca un username y clave correctos. Observe que ambos campos pueden ser sensibles a mayúsculas.</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>`)
+          {% comment %} toastError('Login', responseJSON.detail, '') {% endcomment %}
+      })
+  })  
+</script>
+{% endblock %}

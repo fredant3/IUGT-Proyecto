@@ -1,0 +1,76 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}{{ titlePage }}{% endblock %}
+
+{% block breadcrumbs %}
+<span class="">{{ module }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+	<div class="card-body">
+		<h1>{{ submodule }}</h1>
+	</div>
+	<div class="card-body">
+		Sub Módulos
+		<div class="">
+			{% for name, link in submoduleList %}
+			<a href="{{ link }}" class="btn btn-outline-primary">
+				<span class="tf-icons bx bx-plus me-1"></span>{{ name }}
+			</a>
+			{% endfor %}
+		</div>
+
+		<!-- Order Statistics -->
+		<div class="row align-items-center">
+			<div class="col-lg-4 col-sm-12 mb-4">
+				<div class="card">
+					<div class="card-header">Emergencias por Incidencia</div>
+					<div class="card-body">
+						<div id="idFirstStatisticsChart"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-12 mb-4">
+				<div class="card">
+					<div class="card-header">Emergencias por Estado</div>
+					<div class="card-body">
+						<div id="idSecondStatisticsChart"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4 col-sm-12 mb-4">
+				<div class="card">
+					<div class="card-header">Emergencias por Organismo</div>
+					<div class="card-body">
+						<div id="idThirdStatisticsChart"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block vendor_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/data-tables/css/dataTables.bootstrap5.css' %}">
+<link rel="stylesheet" href="{% static 'vendor/libs/apex-charts/apexcharts.css' %}">
+{% endblock %}
+
+{% block vendor_js %}
+<script>
+    // Datos para gráficos
+    const data = {{ data| safe }};
+    const labels = {{ labels| safe }};
+    const dataTorta = {{ dataTorta| safe }};
+    const labelsTorta = {{ labelsTorta| safe }};
+    const colorsTorta = {{ colorsTorta| safe }};
+    const dataOrganismos = {{ dataOrganismos| safe }};
+    const labelsOrganismos = {{ labelsOrganismos| safe }};
+    const colorsOrganismos = {{ colorsOrganismos| safe }};
+</script>
+
+<script src="{% static 'vendor/libs/apex-charts/apexcharts.js' %}"></script>
+<script src="{% static 'js/charts/dashboard.js' %}"></script>
+{% endblock %}

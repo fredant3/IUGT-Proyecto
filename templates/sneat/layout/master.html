@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en" class="light-style layout-menu-fixed {{content_layout_class}}" data-assets-path="{% static '/' %}"
+  data-base-url="{{url}}" data-framework="django" data-template="vertical-menu-free">
+
+<head>
+  <title>
+    {% block title %}{% endblock title %} |
+    {% get_theme_variables 'template_name' %} - {% get_theme_variables 'template_suffix' %}
+  </title>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="{% get_theme_variables 'template_description' %}" />
+  <meta name="keywords" content="{% get_theme_variables 'template_keyword' %}" />
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicon.icon' %}" />
+
+  <!-- Include the styles partial -->
+  {% include "./partials/styles.html" %}
+
+  {% block vendor_css %} {% endblock vendor_css %}
+
+  <!--Page CSS-->
+  {% block page_css %}{% endblock page_css %}
+
+  <!-- Include the scripts partial (required ) -->
+  {% include "./partials/scripts_includes.html" %}
+</head>
+
+<body>
+  <!-- beautify ignore:end -->
+  <div class="position-relative">
+    <div class="toast-container top-0 end-0 p-3 position-fixed" style="z-index: 1090;">
+      <div id="toast" class="bs-toast toast hide bg-primary m-2" role="alert" aria-live="assertive" aria-atomic="true"
+        data-bs-delay="2000">
+        <div class="toast-header">
+          <i class='bx bx-bell me-2'></i>
+          <div class="me-auto fw-medium" id="toast-title"></div>
+          <small id="toast-date"></small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" id="toast-message">s</div>
+      </div>
+    </div>
+  </div>
+
+  {% block layout %}{% endblock layout %}
+
+  {% include "./partials/scripts.html" %}
+
+  <!--Vendors Javascript-->
+  {% block vendor_js %} {% endblock vendor_js %}
+
+  <!--Page Javascript-->
+  {% block page_js %} {% endblock page_js %}
+
+  <script>
+    {% if messages %}
+    var html_mensaje = '';
+    {% for mensaje in messages %}
+    html_mensaje += '{{ mensaje }}';
+    {% endfor %}
+    toastWarning("Alerta..!", html_mensaje)
+    {% endif %}
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,114 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}{{ titlePage }}{% endblock %}
+
+{% block breadcrumbs %}
+{% if submodule %}
+<span class="text-muted fw-light">
+	<a href="{{ indexUrl }}" class="text-muted fw-light">{{ module }}</a> /
+</span>
+<span class="">{{ submodule }}</span>
+{% else %}
+<span class="">{{ module }}</span>
+{% endif %}
+{% endblock %}
+
+{% load i18n %}
+
+{% block head %}
+{{ wizard.form.media }}
+{% endblock %}
+
+{% block content %}
+
+<!-- Título dinámico según el paso del formulario -->
+{% with step=wizard.steps.step1 %}
+<p>
+	{% if step == 1 %}
+	Información General del Servicio (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 2 %}
+	Información Legal (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 3 %}
+	Datos del Paciente (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 4 %}
+	Datos de Acompañantes y Testigos (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 5 %}
+	Dirección del Evento (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 6 %}
+	Información Clínica (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 7 %}
+	Signos Vitales y Tratamiento (Paso {{ step }} de {{ wizard.steps.count }})
+	{% elif step == 8 %}
+	Referencias y Contrareferencias (Paso {{ step }} de {{ wizard.steps.count }})
+	{% else %}
+	Paso {{ step }} de {{ wizard.steps.count }}
+	{% endif %}
+</p>
+{% endwith %}
+
+<form action="" method="post">{% csrf_token %}
+	<div class="inputContainer fromWizard {{ form.container_class }}">
+		{{ wizard.management_form }}
+		{% if wizard.form.forms %}
+		{{ wizard.form.management_form }}
+		{% for form in wizard.form.forms %}
+		{% for field in form %}
+		<div class="input">
+			<label for="{{ field.id_for_label }}" class="input__label">
+				{{ field.label }}
+				{% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+			</label>
+			<div class="input__container">
+				{{ field }}
+				{% if field.help_text %}
+				<small class="form-text text-muted">{{ field.help_text }}</small>
+				{% endif %}
+				{% for error in field.errors %}
+				<div class="invalid-feedback d-block">{{ error }}</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endfor %}
+		{% endfor %}
+		{% else %}
+		{% for field in wizard.form %}
+		<div class="input">
+			<label for="{{ field.id_for_label }}" class="input__label">
+				{{ field.label }}
+				{% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+			</label>
+			<div class="input__container">
+				{{ field }}
+				{% if field.help_text %}
+				<small class="form-text text-muted">{{ field.help_text }}</small>
+				{% endif %}
+				{% for error in field.errors %}
+				<div class="invalid-feedback d-block">{{ error }}</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% endfor %}
+		{% endif %}
+	</div>
+
+	<div class="mt-3">
+		{% if wizard.steps.prev %}
+		<button class="btn btn-secondary" name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">
+			{% translate "Primer paso" %}
+		</button>
+		<button class="btn btn-outline-secondary" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">
+			{% translate "Paso anterior" %}
+		</button>
+		{% endif %}
+		<input class="btn btn-primary" type="submit"
+			value="{% if wizard.steps.next %}{% translate 'Siguiente' %}{% else %}{% translate 'Finalizar' %}{% endif %}" />
+	</div>
+</form>
+{% endblock %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/venezuela.js' %}"></script>
+{% endblock %}

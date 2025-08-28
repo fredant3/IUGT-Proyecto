@@ -1,0 +1,65 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}Equipos (GC){% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-muted fw-light">
+  <a href="{% url 'gc:info' %}" class="text-muted fw-light">Gestión Comunicacional</a> /
+</span>
+<span class="">Equipos</span>
+{% endblock %}
+
+{% block btnAdd %}
+<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#suciModal">
+  <span class="tf-icons bx bx-plus me-1"></span>Registrar Equipo
+</button>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive text-nowrap">
+      <table id="gc-sm-listing-account" class="table table-striped"">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Equipo</th>
+            <th>Descripcion</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% include "./create-modal.html" %}
+{% endblock %}
+
+{% block vendor_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/data-tables/css/dataTables.bootstrap5.css' %}">
+{% endblock %}
+
+{% block page_css %}
+<link rel="stylesheet" href="{% static 'css/custom.css' %}">
+{% endblock %}
+
+{% block vendor_js %}
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.js' %}"></script>
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.bootstrap5.js' %}"></script>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/gc/equipments.js' %}"></script>
+<script src="{% static 'js/modal.js' %}"></script>
+<script>
+$(document).ready(function () {
+  let url = "{% url 'gc:eq:listing-equipments' %}"
+  listingAccount(url);
+});
+</script>
+{% endblock %}

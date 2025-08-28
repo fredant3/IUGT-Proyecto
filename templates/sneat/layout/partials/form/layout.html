@@ -1,0 +1,102 @@
+{% extends layout_path %}
+{% load static %}
+
+{% block title %}
+{{ titlePage }}
+{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-muted fw-light"><a href="{{ indexUrl }}" class="text-muted fw-light">{{ module }}</a> /</span>
+<span class="text-muted fw-light"><a href="{{ listUrl }}" class="text-muted fw-light">{{ submodule }}</a> /</span>
+<span class="">{{ tag }}</span>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-xl">
+		<div class="card mb-4">
+			<div class="card-header d-flex justify-content-between align-items-center">
+				<h5 class="mb-0">{{ titleForm }}</h5>
+				<small class="text-muted float-end">{{ tag }}</small>
+			</div>
+
+			<div class="card-body">
+				<form id="form" novalidate enctype="multipart/form-data">
+					{% csrf_token %}
+					<div class="inputContainer {{ form.container_class }}">
+						{% for field in form %}
+						<div class="input {{ form.input_class }}">
+							<label for="inputEmail3" class="input__label">{{ field.label }}</label>
+							<div class="input__container">
+								{{ field }}
+								<div class="invalid-feedback"></div>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+					<div class="d-flex gap-2 justify-content-end">
+						<button type="submit" class="btn btn-primary">
+							<i class="bx bx-save scaleX-n1-rtl bx-sm me-1"></i>
+							Guardar
+						</button>
+						<a href="{{ listUrl }}" class="btn btn-danger">
+							<i class="bx bx-arrow-back scaleX-n1-rtl bx-sm me-1"></i>
+							Volver
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/ajax-setup.js' %}"></script>
+<script src="{% static 'js/venezuela.js' %}"></script>
+<script src="{% static 'js/form.js' %}"></script>
+<script>
+	const url = '{{ urlForm }}';
+	const method = '{{ methodForm }}';
+	const submodule = '{{ submodule }}';
+
+	$('form').on('submit', function (event) {
+		event.preventDefault();
+
+		let setup = {
+			url: url,
+			type: method,
+			dataType: 'json',
+		};
+
+		if ($(this).find('input[type="file"]').length) {
+			const data = new FormData(this);
+			setup = { ...setup, data, processData: false, contentType: false };
+		} else {
+			const data = $(this).serializeArray();
+			setup = { ...setup, data };
+		}
+
+		$.ajax(setup)
+			.done(function (data) {
+				if (data.hasOwnProperty('errors')) {
+					toastError(submodule, 'Ha ocurrido un error..!');
+					form_errors(data.errors);
+					return false;
+				}
+
+				$('form').trigger('reset');
+				toastSuccess(submodule, data.message);
+				document.getElementById('form').classList.remove('was-validated');
+				setTimeout(() => (location.href = '{{ listUrl }}'), 2100);
+			})
+			.fail((jqXHR, textStatus, errorThrown) => console.error)
+			.always(() => {
+				Array.from(
+					document.querySelectorAll('.form-control.is-invalid')
+				).forEach(el => el.classList.remove('is-invalid'));
+			});
+	});
+</script>
+{% endblock %}

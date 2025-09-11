@@ -11,7 +11,7 @@
 **Clonar el ropositorio**
 
 ```
-git clone git@github.com:erickjpl/suci-ven911.git
+git clone https://github.com/fredant3/IUGT-Proyecto.git
 ```
 
 ## Paso 2

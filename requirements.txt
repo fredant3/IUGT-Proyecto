@@ -1,0 +1,10 @@
+Django==5.1.1
+djangorestframework==3.15.2
+djangorestframework_simplejwt==5.3.1
+python-dotenv==1.0.1
+openpyxl==3.1.5
+Faker==33.1.0
+autoflake==2.3.1
+django-formtools==2.5.1
+django-crispy-forms==2.3
+user-agents==2.2.0

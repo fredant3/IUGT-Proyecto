@@ -1,0 +1,71 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}{{ titlePage }}{% endblock %}
+
+{% block breadcrumbs %}
+{% if submodule %}
+<span class="text-muted fw-light">
+	<a href="{{ indexUrl }}" class="text-muted fw-light">{{ module }}</a> /
+</span>
+<span class="">{{ submodule }}</span>
+{% else %}
+<span class="">{{ module }}</span>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+	<!-- Botones principales generados dinámicamente -->
+	<div class="row mb-4">
+		{% for button in buttons %}
+		<div class="col-md-6 mb-3">
+			<a href="{{ button.url }}" class="btn {{ button.class }} w-100 py-3">
+				<i class="{{ button.icon }} me-2"></i>
+				{{ button.name }}
+				{% if button.description %}
+				<small class="d-block mt-1">{{ button.description }}</small>
+				{% endif %}
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+
+	<!-- Contenido dinámico -->
+	<div class="row">
+		<div class="col-12">
+			{% if submodule %}
+			{% block biblioteca_content %}
+			<!-- Aquí se cargará el contenido específico de cada sección -->
+			{% endblock %}
+			{% else %}
+			<!-- Vista de inicio de Biblioteca -->
+			<div class="card">
+				<div class="card-body text-center py-5">
+					<h4 class="mb-3">Bienvenido a la Biblioteca</h4>
+					<p class="text-muted">Seleccione una opción del menú superior</p>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block page_css %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/biblioteca.css' %}">
+{% endblock %}
+
+{% block page_js %}
+{{ block.super }}
+<script src="{% static 'js/ajax-setup.js' %}"></script>
+{% if not submodule %}
+<script>
+	$(document).ready(function () {
+		// Código para la vista principal si es necesario
+	});
+</script>
+{% endif %}
+{% endblock %}

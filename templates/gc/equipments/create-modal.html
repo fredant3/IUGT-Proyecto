@@ -1,0 +1,54 @@
+<!-- Modal -->
+<div class="modal fade" id="suciModal" tabindex="-1" aria-hidden="false" data-bs-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex w-100 justify-content-between align-items-center">
+          <h5 class="modal-title" id="suciModalTitle">Registrar Equipo</h5>
+          {% comment %} <small class="me-4 text-muted float-end">Default label</small> {% endcomment %}
+        </div>
+
+        <button
+          type="button"
+          id="changeScreen"
+          class="btn-close change-screen"
+          aria-label="Change Screen"
+        ></button>
+        <button
+          type="button"
+          class="btn-close btns-modal"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <form>
+        {% csrf_token %}
+
+        <div class="modal-body">
+          {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+
+            {% comment %} <div class="mb-3">
+              <label class="form-label" for="basic-default-fullname">{{ field.label }}</label>
+              {{ field }}
+            </div> {% endcomment %}
+          {% endfor %}
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Send</button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

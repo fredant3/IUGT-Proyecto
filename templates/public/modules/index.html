@@ -1,0 +1,36 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}
+Módulos
+{% endblock %}
+
+{% block breadcrumbs %}
+<span class="">Sistema Unificado para el Control Interno del Ven 9-1-1</span>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-5 align-items-center justify-content-around">
+	{% for module in modules %}
+	<div class="col-6 col-lg-4">
+		<div class="card card-module mb-3">
+			<div class="row g-0 flex-fill">
+				<div class="col-md-4 align-content-center p-2">
+					<img class="card-img card-img-left" src="{% static module.image %}" alt="Card image" />
+				</div>
+
+				<div class="col-md-8 d-flex flex-column">
+					<div class="card-body d-flex flex-column justify-content-between">
+						<h5 class="card-title">{{ module.title }}</h5>
+						<div class="card-text d-flex justify-content-end">
+							<a href="{% url module.url %}" class="btn btn-primary btn-sm">Ingresar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,166 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+	<!-- ! Hide app brand if navbar-full -->
+	{% if not navbar_full %}
+	<div class="app-brand demo">
+		<a href="{% url 'modules:index' %}" class="menu-link">
+			<span class="app-brand-logo demo">{% include './logo.html' with width=25 withbg='#696cff' %}</span>
+			<span class="app-brand-text demo menu-text fw-bold ms-2">{% get_theme_variables 'template_name' %}</span>
+		</a>
+
+		<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"><i
+				class="bx bx-chevron-left bx-sm align-middle"></i></a>
+	</div>
+	{% endif %}
+
+	<div class="menu-inner-shadow"></div>
+
+	<ul class="menu-inner py-1">
+		<li
+			class="menu-item {% if 'modules:index' == request.resolver_match.url_name or '/dashboard/' in request.path %}active open{% endif %}">
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-home-circle"></i>
+				<div class="text-truncate" data-i18n="Dashboards">Inicio</div>
+			</a>
+			<ul class="menu-sub">
+				<li class="menu-item {% if 'modules:index' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'modules:index' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Analytics">Módulos</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+
+
+		<li
+			class="menu-item {% if 'administracion' == request.resolver_match.url_name or 'asignaciones' in request.resolver_match.namespaces or 'averias' in request.resolver_match.namespaces or 'compras' in request.resolver_match.namespaces or 'departamentos' in request.resolver_match.namespaces or 'articulos' in request.resolver_match.namespaces or 'sedes' in request.resolver_match.namespaces %}active open{% endif %}">
+
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-receipt"></i>
+				<div class="text-truncate" data-i18n="Layouts">Administración</div>
+			</a>
+			<ul class="menu-sub">
+				<li class="menu-item {% if 'administracion' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'administracion' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Inicio</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'asignaciones' in request.resolver_match.namespaces and 'list' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'asignaciones:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Asignaciones</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'averias' in request.resolver_match.namespaces and 'list' in request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'averias:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without navbar">Averías</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'compras' in request.resolver_match.namespaces and 'list' in request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'compras:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without navbar">Compras</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'departamentos' in request.resolver_match.namespaces and 'list' in request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'departamentos:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without navbar">Departamentos</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'articulos' in request.resolver_match.namespaces and 'list' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'articulos:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Container">Inventario</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'sedes' in request.resolver_match.namespaces and 'list' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'sedes:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Container">Sedes</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+
+
+
+
+		<li
+			class="menu-item {% if 'gestion_humana' == request.resolver_match.url_name or 'tipos_sueldos' in request.resolver_match.namespaces or 'contratos' in request.resolver_match.namespaces %}active open{% endif %}">
+
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-male-female"></i>
+				<div class="text-truncate" data-i18n="Layouts">Gestión Humana</div>
+			</a>
+
+			<ul class="menu-sub">
+				<li class="menu-item {% if 'gestion_humana' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'gestion_humana' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Inicio</div>
+					</a>
+				</li>
+				<li class="menu-item {% if 'tipos_sueldos' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'tipos_sueldos:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Email">Tipos de Sueldo</div>
+					</a>
+				</li>
+
+				<li
+					class="menu-item {% if 'contratos' in request.resolver_match.namespaces and 'list' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'contratos:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Email">Contratos</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+
+
+
+
+
+		<li
+			class="menu-item {% if 'tecnologia' == request.resolver_match.url_name or 'grupos' in request.resolver_match.namespaces or 'usuarios' in request.resolver_match.namespaces or 'tecnologia' == request.resolver_match.url_name %}active open{% endif %}">
+			<a href="javascript:void(0);" class="menu-link menu-toggle">
+				<i class="menu-icon tf-icons bx bx-cog"></i>
+				<div class="text-truncate" data-i18n="Layouts">Tecnología</div>
+			</a>
+			<ul class="menu-sub">
+				<li class="menu-item {% if 'tecnologia' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'tecnologia' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Inicio</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'auditoria' in request.resolver_match.namespaces and 'list' in request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'auditoria:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without navbar">Auditoría</div>
+					</a>
+				</li>
+				<li
+					class="menu-item {% if 'averias' in request.resolver_match.namespaces and 'list' in request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'averias:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without navbar">Averías</div>
+					</a>
+				</li>
+				<li class="menu-item {% if 'grupos' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'grupos:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Grupos</div>
+					</a>
+				</li>
+				<li class="menu-item {% if '' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'tecnologia:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Inventario</div>
+					</a>
+				</li>
+				<li class="menu-item {% if 'user' == request.resolver_match.url_name %}active{% endif %}">
+					<a href="{% url 'user:list' %}" class="menu-link">
+						<div class="text-truncate" data-i18n="Without menu">Usuarios</div>
+					</a>
+				</li>
+			</ul>
+		</li>
+
+
+
+</aside>

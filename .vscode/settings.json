@@ -1,0 +1,32 @@
+{
+  "editor.formatOnSave": true,
+  "autoflake-extension.remove-all-unused-imports": true,
+  "autoflake-extension.remove-unused-variables": true,
+  "autoflake-extension.remove-duplicate-keys": true,
+  "autoflake-extension.extension.useIntegratedTerminal": false,
+  "flake8.args": [
+    "--config=setup.cfg"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.wordBasedSuggestions": "off",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports.ruff": "explicit"
+    },
+    "editor.tabSize": 2
+  },
+  "isort.args": [
+    "--profile",
+    "black",
+    "--line-length",
+    "120",
+    "--src-path",
+    "src,tests",
+    "--project",
+    "django",
+    "--known-local-folder",
+  ],
+}

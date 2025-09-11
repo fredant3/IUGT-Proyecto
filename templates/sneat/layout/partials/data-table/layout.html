@@ -1,0 +1,84 @@
+{% extends layout_path %}
+
+{% load static %}
+
+{% block title %}{{ titlePage }}{% endblock %}
+
+{% block breadcrumbs %}
+<span class="text-muted fw-light">
+  <a href="{{ indexUrl }}" class="text-muted fw-light">{{ module }}</a> /
+</span>
+<span class="">{{ submodule }}</span>
+{% endblock %}
+
+{% block btnAdd %}
+{% if isSelect %}
+<div class="mb-4">
+  <select class="form-select" id="select-options">
+    <option selected>{{ selectTitle }}</option>
+    {% for value, label in selectOptions %}
+      <option value="{{ value }}">{{ label }}</option>
+    {% endfor %}
+  </select>
+</div>
+{% elif createUrl is not None %}
+<a href="{{ createUrl }}" class="btn btn-outline-primary">
+  <span class="tf-icons bx bx-plus me-1"></span>{{ createBtn }}
+</a>
+{% endif %}
+
+{% if exportExcelUrl %}
+<a href="{{ exportExcelUrl }}" class="btn btn-outline-primary">
+  <span class="tf-icons bx bx-plus me-1"></span>Exportar a Excel
+</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive text-nowrap">
+      <table id="data-table" class="table table-striped"">
+        <thead>
+          <tr>
+            {% block thead %}
+              {% for column in heads %}
+                <th>{{ column.title }}</th>
+              {% endfor %}
+            {% endblock %}
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block vendor_css %}
+<link rel="stylesheet" href="{% static 'vendor/libs/data-tables/css/dataTables.bootstrap5.css' %}">
+{% endblock %}
+
+{% block vendor_js %}
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.js' %}"></script>
+<script src="{% static 'vendor/libs/data-tables/js/dataTables.bootstrap5.js' %}"></script>
+{% endblock %}
+
+{% block page_js %}
+<script src="{% static 'js/data-table.js' %}"></script>
+<script>
+$(document).ready(function () {
+  $('#select-options').change(function() {
+    const createUrl = "{{ createUrl }}"
+    let valorSeleccionado = $(this).val();
+    window.location.href = createUrl.replace("0", valorSeleccionado);
+  });
+const url = "{{ listApiUrl }}"
+const updateUrl = "{{ updateUrl }}"
+const deleteUrl = "{{ deleteUrl }}"
+  const columns =  {{ columns|safe }}
+  const withActions = "{{ withActions }}"
+  setTBody({url, columns, withActions, updateUrl, deleteUrl});
+});
+</script>
+{% endblock %}

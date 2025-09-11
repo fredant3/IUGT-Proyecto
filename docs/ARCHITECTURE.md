@@ -8,17 +8,11 @@ El proyecto está organizado en los siguientes módulos principales:
 
 ### Módulos Core
 - **administracion**: Gestión administrativa del sistema
-- **asesoria**: Módulo de asesoría y consultoría
-- **biblioteca**: Sistema de gestión de biblioteca
+
 - **dashboard**: Panel de control principal
-- **emergencia**: Gestión de situaciones de emergencia
-- **gestion_comunicacional**: Sistema de comunicaciones
-- **organizacion**: Gestión organizacional
-- **planificacion**: Herramientas de planificación
-- **potencia**: Gestión de recursos energéticos
-- **presupuesto**: Control presupuestario
+
 - **rrhh**: Recursos Humanos
-- **seguridad**: Sistema de seguridad y permisos
+
 - **users**: Gestión de usuarios
 
 ### Componentes Base

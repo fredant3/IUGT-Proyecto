@@ -16,31 +16,6 @@ class Roles:
             "departamento",
             "articulo",
             "sede"
-            # ASESORIA,
-            "denuncia",
-            "registro filmico",
-            # EMERGENCIA
-            "incidencia",
-            "organismo",
-            "emergencia",
-            # ORGANIZACION
-            "normativa",
-            "reglamento",
-            # PLANIFICACION
-            "actividad",
-            "infraestructura",
-            "llamada",
-            "objetivo",
-            "transporte",
-            # POTENCIA
-            "incidencia",
-            "uri",
-            # PRESUPUESTO
-            "accion",
-            "asignacion",
-            "cedente",
-            "proyecto",
-            "receptor",
             # RRHH
             "cargo",
             "contrato",
@@ -52,11 +27,6 @@ class Roles:
             "sueldoEmpleado",
             "tipoEmpleado",
             "tipoSueldo",
-            # SEGURIDAD
-            "entrada",
-            "gestione",
-            "salida",
-            "vehiculo",
             # TECNOLOGIA
             "grupos",
             "usuarios",
@@ -131,32 +101,6 @@ class Roles:
                 "articulo",
                 "sede",
             ],
-            "Asesoria": ["denuncia", "registro filmico"],
-            "Emergencia": ["incidencia", "organismo", "emergencia"],
-            "Organizacion": ["normativa", "reglamento"],
-            "Planificacion": [
-                "actividad",
-                "infraestructura",
-                "llamada",
-                "objetivo",
-                "transporte",
-            ],
-            "Potencia": ["incidencia", "uri"],
-            "Presupuesto": ["accion", "asignacion", "cedente", "proyecto", "receptor"],
-            "RRHH": [
-                "cargo",
-                "contrato",
-                "cuenta",
-                "dotacion",
-                "educacion",
-                "empleado",
-                "familiares",
-                "sueldoEmpleado",
-                "tipoEmpleado",
-                "tipoSueldo",
-            ],
-            "Seguridad": ["entrada", "gestione", "salida", "vehiculo"],
-            "Tecnologia": ["grupos", "usuarios"],
         }
 
         permisos_por_rol = {

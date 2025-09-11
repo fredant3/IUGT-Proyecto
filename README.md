@@ -11,7 +11,7 @@
 **Clonar el ropositorio**
 
 ```
-git clone 
+git clone git@github.com:erickjpl/suci-ven911.git
 ```
 
 ## Paso 2
@@ -157,15 +157,9 @@ python manage.py makemigrations helpers
 python manage.py makemigrations users
 python manage.py makemigrations dashboard
 python manage.py makemigrations administracion
-python manage.py makemigrations asesoria
-python manage.py makemigrations biblioteca
-python manage.py makemigrations emergencia
-python manage.py makemigrations organizacion
-python manage.py makemigrations planificacion
-python manage.py makemigrations potencia
-python manage.py makemigrations presupuesto
+
 python manage.py makemigrations rrhh
-python manage.py makemigrations seguridad
+
 python manage.py makemigrations tecnologia
-python manage.py makemigrations gestion_comunicacional
+
 ```
